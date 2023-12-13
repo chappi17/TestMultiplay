@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "Particles/ParticleSystem.h"
 #include "TestMultiplayCharacter.generated.h"
 
 
@@ -43,7 +44,8 @@ public:
 	UFUNCTION(Server, Reliable, withValidation,BlueprintCallable)
 	void ServerRPCFunction(int a );
 
-	
+	UFUNCTION(Client,Reliable, BlueprintCallable)
+	void ClientRPCFunction();
 
 protected:
 
@@ -69,5 +71,8 @@ public:
 
 	UPROPERTY(EditAnyWhere)
 	UStaticMesh* SphereMesh;
+
+	UPROPERTY(EditAnyWhere)
+	UParticleSystem* ParticleEffect;
 };
 

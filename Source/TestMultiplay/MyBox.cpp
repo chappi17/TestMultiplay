@@ -85,7 +85,7 @@ void AMyBox::multicastRPCFunction_Implementation()
 {
 	if (HasAuthority())
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Server: multicastRPCFunction_Implementation"));
+		//GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("Server: multicastRPCFunction_Implementation"));
 		if (ReplicatedVar > 0)
 		{
 			GetWorld()->GetTimerManager().SetTimer(TestTimer, this, &AMyBox::multicastRPCFunction, 2.0f, false);
@@ -93,7 +93,7 @@ void AMyBox::multicastRPCFunction_Implementation()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Green, TEXT("Client: multicastRPCFunction_Implementation"));
+	//	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Green, TEXT("Client: multicastRPCFunction_Implementation"));
 
 	}
 	if (!IsRunningDedicatedServer())

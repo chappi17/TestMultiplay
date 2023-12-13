@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Net/UnrealNetwork.h"
+#include "Kismet/GameplayStatics.h"
 #include "Engine/StaticMeshActor.h"
 
 
@@ -53,6 +54,15 @@ ATestMultiplayCharacter::ATestMultiplayCharacter()
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
 
+void ATestMultiplayCharacter::ClientRPCFunction_Implementation()
+{
+	if (ParticleEffect)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ParticleEffect, GetActorLocation(), FRotator::ZeroRotator, true, EPSCPoolMethod::AutoRelease);
+	}
+
+}
+
 bool ATestMultiplayCharacter::ServerRPCFunction_Validate(int a)
 {
 	if (a >= 0 && a <= 100)
@@ -76,8 +86,10 @@ void ATestMultiplayCharacter::ServerRPCFunction_Implementation(int a)
 		{
 			return;
 		}
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.Owner = this;
 
-		AStaticMeshActor * StaticMeshActor =GetWorld()->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass());
+		AStaticMeshActor * StaticMeshActor =GetWorld()->SpawnActor<AStaticMeshActor>(SpawnParameters);
 		if (StaticMeshActor)
 		{
 			StaticMeshActor->SetReplicates(true);
