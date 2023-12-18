@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "CollectableKey.h"
 #include "TranspoterComponent.generated.h"
 
 
@@ -26,6 +27,10 @@ public:
 
 	bool ArePointsSet; 
 
+
+	UPROPERTY(EditAnywhere)
+	bool OwnerIsTriggerActor;
+
 	UPROPERTY(EditAnywhere)
 	float MoveTime;
 
@@ -38,6 +43,12 @@ public:
 	UPROPERTY(BlueprintReadWrite,VisibleAnywhere)
 	bool AllTriggerActorsTriggered;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void SetPoints(FVector Point1, FVector Point2);
+
+	UFUNCTION()
+	void TriggerActorActivated();
+	
+	UFUNCTION()
+	void TriggerActorDeActivated();
 };

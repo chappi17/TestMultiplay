@@ -6,19 +6,17 @@
 #include "GameFramework/Actor.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/ArrowComponent.h"
 #include "TranspoterComponent.h"
-#include "PressurePlate.generated.h"
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPressurePlateOnActivated);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPressurePlateOnDeActivated);
+#include "MovableActor.generated.h"
 
 UCLASS()
-class TESTMULTIPLAY_API APressurePlate : public AActor
+class TESTMULTIPLAY_API AMovableActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	APressurePlate();
+	AMovableActor();
 
 protected:
 	virtual void BeginPlay() override;
@@ -26,24 +24,22 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
+
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	USceneComponent* RootComp;
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	UStaticMeshComponent* TriggerMesh;
+	UArrowComponent* Point1;
 
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UArrowComponent* Point2;
+	
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	bool Activated;
-
-	UPROPERTY(BlueprintAssignable)
-	FPressurePlateOnActivated OnActivatedDel;
-
-	UPROPERTY(BlueprintAssignable)
-	FPressurePlateOnDeActivated OnDeActivatedDel;
-
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	UTranspoterComponent* Transporter;
+
+
+
 };

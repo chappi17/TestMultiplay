@@ -35,6 +35,10 @@ APressurePlate::APressurePlate()
 		Mesh->SetRelativeLocation(FVector(0.0f, 0.0f, 7.2f));
 	}
 
+	Transporter = CreateDefaultSubobject<UTranspoterComponent>(TEXT("Transporter"));
+	Transporter->MoveTime = 0.25f;
+	Transporter->OwnerIsTriggerActor = true;
+
 }
 
 void APressurePlate::BeginPlay()
@@ -43,6 +47,10 @@ void APressurePlate::BeginPlay()
 	
 	TriggerMesh->SetVisibility(false);
 	TriggerMesh->SetCollisionProfileName(FName("OverlapAll"));
+
+	FVector Point1 = GetActorLocation();
+	FVector Point2 = Point1 + FVector(0.0f, 0.0f, -10.0f);
+	Transporter->SetPoints(Point1, Point2);
 }
 
 void APressurePlate::Tick(float DeltaTime)
@@ -70,7 +78,7 @@ void APressurePlate::Tick(float DeltaTime)
 		{
 			if (!Activated)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::White, TEXT("Activated"));
+				//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::White, TEXT("Activated"));
 				OnActivatedDel.Broadcast();
 				Activated = true;
 			}
@@ -79,7 +87,7 @@ void APressurePlate::Tick(float DeltaTime)
 		{
 			if(Activated)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::White, TEXT("DeActivated"));
+				//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::White, TEXT("DeActivated"));
 				OnDeActivatedDel.Broadcast();
 				Activated = false;
 			}
